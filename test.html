@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burn Test Page</title>
+    <style>
+        body {
+            font-family: Georgia, serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1 {
+            color: #d32f2f;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        .article {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .quote {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+
+        .fire-button {
+            background: linear-gradient(135deg, #ff4500, #ff8c00);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto;
+            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4);
+        }
+
+        .fire-button:hover {
+            transform: scale(1.05);
+            transition: transform 0.2s;
+        }
+    </style>
+</head>
+<body>
+    <div class="article">
+        <h1>🔥 Test Page for "Burn the Web"</h1>
+        
+        <p>
+            This is a test page with sample content to demonstrate the burning effect. 
+            Click the button below to trigger the effect directly (no bookmarklet needed on this page).
+        </p>
+
+        <button class="fire-button" onclick="burnIt()">
+            🔥 BURN THIS PAGE NOW!
+        </button>
+
+        <h2>About the Effect</h2>
+        <p>
+            The "Burn the Web" bookmarklet creates a realistic fire animation that makes 
+            any webpage appear to catch fire and dissolve. It uses HTML5 Canvas for the 
+            particle effects and CSS filters to make the content appear to burn away.
+        </p>
+
+        <div class="quote">
+            "Some people just want to watch the web burn." - Anonymous Developer
+        </div>
+
+        <h2>How It Works</h2>
+        <p>
+            When triggered, the bookmarklet performs the following actions:
+        </p>
+        <ul>
+            <li>Creates an HTML5 Canvas overlay covering the entire viewport</li>
+            <li>Generates 100 fire particles with realistic physics and colors</li>
+            <li>Applies progressive CSS filters to make the page appear to char</li>
+            <li>Fades the entire page to black over 5 seconds</li>
+            <li>Cleans up and removes the canvas when complete</li>
+        </ul>
+
+        <h2>Technical Features</h2>
+        <p>
+            The bookmarklet is optimized for mobile performance with several key features:
+        </p>
+        <ul>
+            <li><strong>Frame Throttling:</strong> Runs at 30 FPS to conserve battery</li>
+            <li><strong>Particle Recycling:</strong> Reuses particle objects for efficiency</li>
+            <li><strong>Gradient Rendering:</strong> Uses radial gradients for realistic glow</li>
+            <li><strong>CSS Transitions:</strong> Smooth filter effects for the burn animation</li>
+        </ul>
+
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod 
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </p>
+
+        <p>
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore 
+            eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt 
+            in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+
+        <button class="fire-button" onclick="burnIt()">
+            🔥 BURN IT AGAIN!
+        </button>
+
+        <p style="text-align: center; margin-top: 30px; color: #666;">
+            <small>
+                Refresh the page to restore the content. The effect is completely harmless!
+            </small>
+        </p>
+    </div>
+
+    <script>
+        window.__BURNIT_NO_AUTORUN__ = true;
+    </script>
+    <script src="burnit.js"></script>
+    <script>
+        function burnIt() {
+            if (window.BurnIt && typeof window.BurnIt.run === 'function') {
+                window.BurnIt.run();
+            }
+        }
+    </script>
+</body>
+</html>
