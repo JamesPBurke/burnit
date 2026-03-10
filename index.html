@@ -272,12 +272,15 @@
 
     <!-- Mobile: copy code -->
     <div class="install-mobile">
-        <a id="bookmarkletMobile" class="loading" style="pointer-events:none;opacity:0.5;display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.6rem;background:linear-gradient(135deg,#c43800,#ff6a00 60%,#ffb300);color:#fff;font-size:1.1rem;font-weight:700;border-radius:40px;text-decoration:none;" href="javascript:void(0)">
-            🔥 Burn It
-        </a>
+        <p class="mobile-steps" style="margin-bottom:.5rem">
+            <strong style="color:#c09070">Install on Android Chrome</strong>
+        </p>
         <p class="mobile-steps">
-            Copy the code below, then in Chrome<br>
-            create a new bookmark and paste it as the URL.
+            1&thinsp;·&thinsp;Tap <strong>📋 Copy code</strong> below<br>
+            2&thinsp;·&thinsp;Bookmark any page (⋮ → Add to bookmarks)<br>
+            3&thinsp;·&thinsp;Open ⋮ → Bookmarks, long-press that bookmark<br>
+            4&thinsp;·&thinsp;Tap <strong>Edit</strong>, clear the URL, paste, save<br>
+            5&thinsp;·&thinsp;Visit any page, tap the address bar, type <em>Burn</em>
         </p>
     </div>
 
@@ -288,7 +291,7 @@
 
     <footer>
         <p>MIT License &mdash; <a href="https://github.com/JamesPBurke/burnit" target="_blank" rel="noopener">github.com/JamesPBurke/burnit</a></p>
-        <p style="margin-top:.4rem">Harmless. Refresh the page to restore it.</p>
+        <p style="margin-top:.4rem">Harmless — works best on pages with light backgrounds.</p>
     </footer>
 
     <script>
@@ -358,9 +361,18 @@
             }, 2200);
         });
 
-        // Demo button
+        // Demo button — restores page after the animation so it doesn't stay blank.
         demoBtn.addEventListener('click', () => {
-            if (window.BurnIt) BurnIt.run();
+            if (!window.BurnIt) return;
+            const result = BurnIt.run();
+            if (!result) return; // already running
+            demoBtn.disabled = true;
+            demoBtn.textContent = '🔥 Burning\u2026';
+            setTimeout(() => {
+                result.restore();
+                demoBtn.disabled = false;
+                demoBtn.textContent = '\u25b6 Try it again';
+            }, 5400); // 4800 ms animation + buffer
         });
     </script>
 </body>
