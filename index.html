@@ -3,408 +3,365 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Burn the Web - Mobile Bookmarklet</title>
+    <title>Burn It 🔥</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #1e1e1e 0%, #2d1810 100%);
-            color: #f0f0f0;
-            line-height: 1.6;
-            padding: 20px;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 40px 0;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #0f0a08;
+            color: #f0ece8;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            padding: 2rem 1.5rem;
+            gap: 0;
         }
 
         h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
-            background: linear-gradient(45deg, #ff4500, #ff8c00, #ffd700);
+            font-size: clamp(3rem, 10vw, 5.5rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(160deg, #ffe066 0%, #ff8c00 40%, #ff3300 80%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: flicker 2s infinite alternate;
+            animation: flicker 3s ease-in-out infinite alternate;
+            line-height: 1;
+            margin-bottom: 0.6rem;
         }
 
         @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
+            0%   { filter: brightness(1); }
+            70%  { filter: brightness(1.05); }
+            85%  { filter: brightness(0.92); }
+            100% { filter: brightness(1.08); }
         }
 
-        .subtitle {
-            font-size: 1.2em;
-            color: #ff8c00;
-            margin-bottom: 10px;
+        .tagline {
+            font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+            color: #a89080;
+            margin-bottom: 3.5rem;
+            text-align: center;
         }
 
-        .description {
-            color: #ccc;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .bookmarklet-section {
-            background: rgba(255, 69, 0, 0.1);
-            border: 2px solid #ff4500;
-            border-radius: 15px;
-            padding: 30px;
-            margin: 40px 0;
-            box-shadow: 0 8px 32px rgba(255, 69, 0, 0.2);
-        }
-
-        .bookmarklet-code {
-            background: #1a1a1a;
-            border: 1px solid #444;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 20px 0;
-            overflow-x: auto;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9em;
-            color: #ff8c00;
-            word-break: break-all;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .copy-button {
-            background: linear-gradient(135deg, #ff4500, #ff6b00);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.1em;
-            font-weight: bold;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4);
+        /* ── Desktop install area ── */
+        .install-desktop {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.4rem;
             width: 100%;
-            max-width: 300px;
-            display: block;
-            margin: 20px auto;
+            max-width: 480px;
+            margin-bottom: 1.8rem;
         }
 
-        .copy-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 69, 0, 0.6);
+        .bar-mock {
+            width: 100%;
+            background: #1e1a17;
+            border: 1px solid #3a2f27;
+            border-radius: 8px;
+            padding: 0.55rem 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.78rem;
+            color: #6b5a4e;
+            user-select: none;
         }
 
-        .copy-button:active {
-            transform: translateY(0);
-        }
-
-        .copy-button.copied {
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-        }
-
-        .instructions {
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 15px;
-            padding: 30px;
-            margin: 40px 0;
-        }
-
-        .instructions h2 {
-            color: #ff8c00;
-            margin-bottom: 20px;
-            font-size: 1.8em;
-        }
-
-        .step {
-            margin: 20px 0;
-            padding: 15px;
-            background: rgba(255, 69, 0, 0.05);
-            border-left: 4px solid #ff4500;
-            border-radius: 5px;
-        }
-
-        .step-number {
-            display: inline-block;
-            background: #ff4500;
-            color: white;
-            width: 30px;
-            height: 30px;
-            line-height: 30px;
-            text-align: center;
+        .bar-mock-dot {
+            width: 7px; height: 7px;
             border-radius: 50%;
-            font-weight: bold;
-            margin-right: 10px;
+            background: #3a2f27;
+            flex-shrink: 0;
         }
 
-        .warning {
-            background: rgba(255, 165, 0, 0.2);
-            border: 1px solid #ffa500;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 20px 0;
+        .bar-mock-sep {
+            width: 1px; height: 14px;
+            background: #3a2f27;
+            flex-shrink: 0;
         }
 
-        .warning-icon {
-            color: #ffa500;
-            font-weight: bold;
-            margin-right: 5px;
+        .drop-zone {
+            border: 2px dashed #4a3828;
+            border-radius: 6px;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.75rem;
+            color: #5a4a3a;
+            white-space: nowrap;
+            transition: border-color 0.2s, color 0.2s;
         }
 
-        code {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 2px 6px;
-            border-radius: 4px;
+        .drop-zone.highlight {
+            border-color: #ff8c00;
             color: #ff8c00;
-            font-family: 'Courier New', monospace;
         }
 
-        .source-code {
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 15px;
-            padding: 30px;
-            margin: 40px 0;
+        /* Animated drop arrow */
+        .arrow-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            color: #5a4535;
+            animation: bounce 1.4s ease-in-out infinite;
         }
 
-        .source-code h2 {
-            color: #ff8c00;
-            margin-bottom: 20px;
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(-6px); }
         }
 
-        .source-code pre {
-            background: #1a1a1a;
-            border: 1px solid #444;
-            border-radius: 8px;
-            padding: 20px;
-            overflow-x: auto;
-            font-size: 0.85em;
-            line-height: 1.5;
-            max-height: 400px;
-            overflow-y: auto;
-        }
+        .arrow-wrap svg { display: block; }
 
-        footer {
-            text-align: center;
-            margin-top: 60px;
-            padding: 20px;
-            color: #888;
-            border-top: 1px solid #444;
-        }
-
-        a {
-            color: #ff8c00;
+        /* ── The bookmarklet link ── */
+        #bookmarklet {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.6rem;
+            background: linear-gradient(135deg, #c43800 0%, #ff6a00 60%, #ffb300 100%);
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 40px;
             text-decoration: none;
+            cursor: grab;
+            box-shadow: 0 4px 24px rgba(255, 100, 0, 0.45);
+            transition: box-shadow 0.2s, transform 0.15s;
+            user-select: none;
+            -webkit-user-drag: element;
         }
 
-        a:hover {
-            text-decoration: underline;
+        #bookmarklet:active { cursor: grabbing; transform: scale(0.97); }
+
+        #bookmarklet:hover {
+            box-shadow: 0 6px 32px rgba(255, 120, 0, 0.65);
+            transform: translateY(-2px);
         }
 
+        #bookmarklet.loading {
+            opacity: 0.5;
+            cursor: wait;
+            pointer-events: none;
+        }
+
+        .drag-hint {
+            font-size: 0.8rem;
+            color: #6b5a4e;
+            text-align: center;
+        }
+
+        /* ── Mobile install ── */
+        .install-mobile {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            width: 100%;
+            max-width: 340px;
+            margin-bottom: 1.8rem;
+        }
+
+        .mobile-steps {
+            font-size: 0.85rem;
+            color: #7a6558;
+            text-align: center;
+            line-height: 1.7;
+        }
+
+        /* ── Divider ── */
+        .divider {
+            width: 100%;
+            max-width: 320px;
+            border: none;
+            border-top: 1px solid #2a1f18;
+            margin: 0.4rem 0 1.4rem;
+        }
+
+        /* ── Buttons ── */
+        button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.65rem 1.4rem;
+            border: 1px solid #3a2f27;
+            border-radius: 40px;
+            background: transparent;
+            color: #c09070;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background 0.18s, color 0.18s, border-color 0.18s;
+        }
+
+        button:hover {
+            background: #1e1410;
+            color: #ff9050;
+            border-color: #6a4030;
+        }
+
+        button.success {
+            color: #6bcf7f;
+            border-color: #2a5a30;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        /* ── Footer ── */
+        footer {
+            font-size: 0.75rem;
+            color: #3d3028;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        footer a { color: #5a4535; text-underline-offset: 3px; }
+        footer a:hover { color: #ff8c00; }
+
+        /* ── Responsive ── */
         @media (max-width: 600px) {
-            h1 {
-                font-size: 2em;
-            }
-            
-            .bookmarklet-section,
-            .instructions,
-            .source-code {
-                padding: 20px;
-            }
+            .install-desktop { display: none; }
+            .install-mobile  { display: flex; }
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .install-desktop { display: none; }
+            .install-mobile  { display: flex; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🔥 Burn the Web</h1>
-            <p class="subtitle">A Mobile Chrome Bookmarklet</p>
-            <p class="description">
-                Make any webpage burn through in irregular glowing patches and dissolve into ash. 
-                Works on Android Chrome without extensions!
-            </p>
-        </header>
 
-        <section class="bookmarklet-section">
-            <h2 style="color: #ff4500; text-align: center; margin-bottom: 20px;">
-                📱 Get the Bookmarklet
-            </h2>
-            
-            <p style="text-align: center; margin-bottom: 20px;">
-                Click the button below to copy the bookmarklet code:
-            </p>
+    <h1>Burn It</h1>
+    <p class="tagline">for doomscrolling self-care</p>
 
-            <button class="copy-button" id="copyButton">
-                📋 Copy Bookmarklet Code
-            </button>
+    <!-- Desktop: drag to bookmarks bar -->
+    <div class="install-desktop">
+        <div class="bar-mock">
+            <div class="bar-mock-dot"></div>
+            <div class="bar-mock-dot"></div>
+            <div class="bar-mock-dot"></div>
+            <div class="bar-mock-sep"></div>
+            <span>Bookmarks bar</span>
+            <span id="dropZone" class="drop-zone">← drop here</span>
+        </div>
 
-            <div class="bookmarklet-code" id="bookmarkletCode">
-                <!-- The minified code will be inserted here -->
-            </div>
+        <div class="arrow-wrap" aria-hidden="true">
+            <svg width="18" height="28" viewBox="0 0 18 28" fill="none">
+                <line x1="9" y1="26" x2="9" y2="2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <polyline points="3,9 9,2 15,9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+        </div>
 
-            <div class="warning">
-                <span class="warning-icon">⚠️</span>
-                <strong>Note:</strong> This is a JavaScript bookmarklet. Follow the installation instructions below to add it to your Chrome bookmarks.
-            </div>
-        </section>
+        <a id="bookmarklet" class="loading" href="javascript:void(0)"
+           title="Drag this to your bookmarks bar">
+            🔥 Burn It
+        </a>
 
-        <section class="instructions">
-            <h2>📖 Installation Instructions</h2>
-            <p style="margin-bottom: 20px;">
-                Follow these steps to install the bookmarklet on Android Chrome:
-            </p>
-
-            <div class="step">
-                <span class="step-number">1</span>
-                <strong>Copy the Code:</strong> Tap the "Copy Bookmarklet Code" button above. The code will be copied to your clipboard.
-            </div>
-
-            <div class="step">
-                <span class="step-number">2</span>
-                <strong>Open Bookmarks:</strong> In Chrome, tap the three-dot menu (⋮) in the top-right corner, then tap "Bookmarks".
-            </div>
-
-            <div class="step">
-                <span class="step-number">3</span>
-                <strong>Add New Bookmark:</strong> Tap the three-dot menu again and select "Add new bookmark" (or tap the ⭐ icon and then "Edit").
-            </div>
-
-            <div class="step">
-                <span class="step-number">4</span>
-                <strong>Name It:</strong> In the "Name" field, type <code>Burn It</code> or any name you prefer.
-            </div>
-
-            <div class="step">
-                <span class="step-number">5</span>
-                <strong>Paste the Code:</strong> In the "URL" field, <strong>delete any existing content</strong> and paste the code you copied in step 1. Make sure it starts with <code>javascript:</code>
-            </div>
-
-            <div class="step">
-                <span class="step-number">6</span>
-                <strong>Save:</strong> Tap "Save" or the checkmark icon to save your bookmark.
-            </div>
-
-            <h3 style="color: #ff8c00; margin-top: 30px; margin-bottom: 15px;">
-                🚀 How to Use
-            </h3>
-
-            <div class="step">
-                <span class="step-number">1</span>
-                Navigate to any webpage you want to burn.
-            </div>
-
-            <div class="step">
-                <span class="step-number">2</span>
-                Tap the address bar at the top of Chrome.
-            </div>
-
-            <div class="step">
-                <span class="step-number">3</span>
-                Type "Burn" and look for your bookmark in the suggestions.
-            </div>
-
-            <div class="step">
-                <span class="step-number">4</span>
-                Tap the bookmark. Watch the page catch fire and burn away! 🔥
-            </div>
-
-            <div class="warning" style="margin-top: 20px;">
-                <span class="warning-icon">💡</span>
-                <strong>Tip:</strong> The effect lasts about 5 seconds. Refresh the page to restore it. The bookmarklet is harmless and doesn't modify the actual website.
-            </div>
-        </section>
-
-        <section class="source-code">
-            <h2>👨‍💻 Source Code</h2>
-            <p style="margin-bottom: 20px;">
-                The unminified source code is available for review. This bookmarklet uses HTML5 Canvas 
-                and a particle system to create the fire effect, combined with CSS filters to make 
-                the page appear to burn.
-            </p>
-            <p style="margin-bottom: 20px;">
-                <a href="burnit.js" target="_blank">View full source code (burnit.js)</a>
-            </p>
-            <details>
-                <summary style="cursor: pointer; color: #ff8c00; margin-bottom: 15px;">
-                    Click to view source code inline
-                </summary>
-                <pre id="sourceCode"></pre>
-            </details>
-        </section>
-
-        <footer>
-            <p>
-                Made with 🔥 for mobile Chrome users
-            </p>
-            <p style="margin-top: 10px; font-size: 0.9em;">
-                <a href="https://github.com/JamesPBurke/burnit" target="_blank">View on GitHub</a>
-            </p>
-        </footer>
+        <p class="drag-hint">Drag the button above to your bookmarks bar,<br>then visit any page and click it.</p>
     </div>
 
-    <script>
-        let bookmarkletCode = 'javascript:(function(){alert("Loading failed. Reload this page and try again.");})();';
+    <!-- Mobile: copy code -->
+    <div class="install-mobile">
+        <a id="bookmarkletMobile" class="loading" style="pointer-events:none;opacity:0.5;display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.6rem;background:linear-gradient(135deg,#c43800,#ff6a00 60%,#ffb300);color:#fff;font-size:1.1rem;font-weight:700;border-radius:40px;text-decoration:none;" href="javascript:void(0)">
+            🔥 Burn It
+        </a>
+        <p class="mobile-steps">
+            Copy the code below, then in Chrome<br>
+            create a new bookmark and paste it as the URL.
+        </p>
+    </div>
 
-        function minifyJs(source) {
-            return source
-                .replace(/\/\*[\s\S]*?\*\//g, '')
-                .replace(/^\s*\/\/.*$/gm, '')
+    <div class="actions">
+        <button id="copyBtn">📋 Copy code</button>
+        <button id="demoBtn">▶ Try it now</button>
+    </div>
+
+    <footer>
+        <p>MIT License &mdash; <a href="https://github.com/JamesPBurke/burnit" target="_blank" rel="noopener">github.com/JamesPBurke/burnit</a></p>
+        <p style="margin-top:.4rem">Harmless. Refresh the page to restore it.</p>
+    </footer>
+
+    <script>
+        window.__BURNIT_NO_AUTORUN__ = true;
+    </script>
+    <script src="burnit.js"></script>
+    <script>
+        function minifyJs(src) {
+            return src
+                .replace(/\/\*[\s\S]*?\*\//g, '')  // block comments
+                .replace(/\/\/[^\n]*/g, '')          // line comments (inline too)
                 .replace(/\s+/g, ' ')
-                .replace(/\s*([{}();,:<>=+\-*\/])\s*/g, '$1')
+                .replace(/\s*([{}();,:<>=+\-*\/!&|])\s*/g, '$1')
                 .trim();
         }
 
-        const codeBox = document.getElementById('bookmarkletCode');
-        const copyButton = document.getElementById('copyButton');
+        let bookmarkletCode = '';
 
-        function setCopyButtonState(text, copied) {
-            copyButton.textContent = text;
-            copyButton.classList.toggle('copied', copied);
-        }
-
-        copyButton.addEventListener('click', async () => {
-            try {
-                await navigator.clipboard.writeText(bookmarkletCode);
-                setCopyButtonState('✅ Copied!', true);
-                setTimeout(() => setCopyButtonState('📋 Copy Bookmarklet Code', false), 2500);
-            } catch (err) {
-                const textArea = document.createElement('textarea');
-                textArea.value = bookmarkletCode;
-                textArea.style.position = 'fixed';
-                textArea.style.left = '-999999px';
-                document.body.appendChild(textArea);
-                textArea.select();
-                try {
-                    document.execCommand('copy');
-                    setCopyButtonState('✅ Copied!', true);
-                    setTimeout(() => setCopyButtonState('📋 Copy Bookmarklet Code', false), 2500);
-                } catch (fallbackErr) {
-                    alert('Failed to copy. Please copy manually from the code box.');
-                }
-                document.body.removeChild(textArea);
-            }
-        });
+        const bookmarkletEl       = document.getElementById('bookmarklet');
+        const bookmarkletMobileEl = document.getElementById('bookmarkletMobile');
+        const copyBtn             = document.getElementById('copyBtn');
+        const demoBtn             = document.getElementById('demoBtn');
+        const dropZone            = document.getElementById('dropZone');
 
         fetch('burnit.js')
-            .then(response => response.text())
-            .then(code => {
-                document.getElementById('sourceCode').textContent = code;
-                const minified = minifyJs(code);
-                bookmarkletCode = `javascript:${minified}`;
-                codeBox.textContent = bookmarkletCode;
+            .then(r => r.text())
+            .then(src => {
+                bookmarkletCode = 'javascript:' + minifyJs(src);
+
+                bookmarkletEl.href = bookmarkletCode;
+                bookmarkletEl.classList.remove('loading');
+
+                bookmarkletMobileEl.href = bookmarkletCode;
+                bookmarkletMobileEl.style.opacity = '';
+                bookmarkletMobileEl.style.pointerEvents = '';
             })
-            .catch(() => {
-                document.getElementById('sourceCode').textContent = '// Source code file not found. Please see burnit.js in the repository.';
-                codeBox.textContent = bookmarkletCode;
-            });
+            .catch(() => {});
+
+        // Bookmarks-bar drop-zone highlight
+        bookmarkletEl.addEventListener('dragstart', () => {
+            dropZone.classList.add('highlight');
+        });
+        bookmarkletEl.addEventListener('dragend', () => {
+            dropZone.classList.remove('highlight');
+        });
+
+        // Copy button
+        copyBtn.addEventListener('click', async () => {
+            if (!bookmarkletCode) return;
+            const original = copyBtn.textContent;
+            try {
+                await navigator.clipboard.writeText(bookmarkletCode);
+            } catch (_) {
+                const ta = document.createElement('textarea');
+                ta.value = bookmarkletCode;
+                ta.style.cssText = 'position:fixed;left:-9999px';
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+            }
+            copyBtn.textContent = '✅ Copied!';
+            copyBtn.classList.add('success');
+            setTimeout(() => {
+                copyBtn.textContent = original;
+                copyBtn.classList.remove('success');
+            }, 2200);
+        });
+
+        // Demo button
+        demoBtn.addEventListener('click', () => {
+            if (window.BurnIt) BurnIt.run();
+        });
     </script>
 </body>
 </html>

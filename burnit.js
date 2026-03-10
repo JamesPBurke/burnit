@@ -339,7 +339,7 @@
                 for (let i = 0; i < embers.length; i += 1) {
                     const ember = embers[i];
                     const alpha = Math.max(0, ember.life);
-                    ctx.fillStyle = `rgba(255,${Math.floor(rand(120, 200))},40,${alpha})`;
+                    ctx.fillStyle = 'rgba(255,' + Math.floor(rand(120, 200)) + ',40,' + alpha + ')';
                     ctx.beginPath();
                     ctx.arc(ember.x, ember.y, ember.size, 0, Math.PI * 2);
                     ctx.fill();
@@ -354,7 +354,7 @@
                 // Keep filter cheap for heavy pages.
                 const heat = Math.min(1, progress * 1.3);
                 const dark = Math.max(0, (progress - 0.4) / 0.6);
-                domTarget.style.filter = `sepia(${(0.45 * heat).toFixed(3)}) saturate(${(1 + 0.85 * heat).toFixed(3)}) brightness(${(1 - 0.45 * dark).toFixed(3)})`;
+                domTarget.style.filter = 'sepia(' + (0.45 * heat).toFixed(3) + ') saturate(' + (1 + 0.85 * heat).toFixed(3) + ') brightness(' + (1 - 0.45 * dark).toFixed(3) + ')';
 
                 if (progress > 0.58) {
                     const fade = Math.min(1, (progress - 0.58) / 0.42);
@@ -399,9 +399,9 @@
                         patch.x, patch.y, glowR
                     );
                     const heat = patch.edgeHeat;
-                    glow.addColorStop(0, `rgba(255,245,160,${0.35 * heat})`);
-                    glow.addColorStop(0.45, `rgba(255,138,35,${0.52 * heat})`);
-                    glow.addColorStop(0.8, `rgba(255,68,4,${0.36 * heat})`);
+                    glow.addColorStop(0, 'rgba(255,245,160,' + (0.35 * heat) + ')');
+                    glow.addColorStop(0.45, 'rgba(255,138,35,' + (0.52 * heat) + ')');
+                    glow.addColorStop(0.8, 'rgba(255,68,4,' + (0.36 * heat) + ')');
                     glow.addColorStop(1, 'rgba(255,60,0,0)');
                     ctx.fillStyle = glow;
                     ctx.beginPath();
@@ -423,10 +423,10 @@
                 // only survive at the outer edge. Where two patches have merged, their
                 // shared interior is also punched out, making them join cleanly.
                 ctx.save();
-                ctx.setTransform(1, 0, 0, 1, 0, 0); // identity — raw pixel copy
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
                 ctx.globalCompositeOperation = 'destination-out';
                 ctx.drawImage(offscreen, 0, 0);
-                ctx.restore(); // restores dpr transform and source-over
+                ctx.restore();
 
                 // Pass 4: draw ash texture over the burn areas using the same irregular
                 // paths, so ash and glow edges align exactly.
@@ -448,7 +448,7 @@
 
                 // Subtle soot haze over everything.
                 const haze = Math.min(0.75, elapsed / CONFIG.animationDuration * 0.8);
-                ctx.fillStyle = `rgba(0,0,0,${haze.toFixed(3)})`;
+                ctx.fillStyle = 'rgba(0,0,0,' + haze.toFixed(3) + ')';
                 ctx.fillRect(0, 0, viewportWidth, viewportHeight);
 
                 updateDomProgress(elapsed / CONFIG.animationDuration, nowMs);
